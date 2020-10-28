@@ -203,34 +203,34 @@
         </p>
       </header>
       <div class="box">
-        <form method="post" action="#">
+        <form method="post" action="#" onsubmit="return formSubmit(this)">
           <div class="fields">
             <div class="field half">
-              
+
               <label for="name">Name</label>
-              <input type="text" name="name" placeholder="Name" />
+              <input type="text" name="name" id="name" placeholder="Name" required />
             </div>
             <div class="field half">
               <label for="email">Email</label>
-              <input type="email" name="email" placeholder="Email" />
+              <input type="email" name="email" id="email" placeholder="Email" required />
             </div>
             <div class="field half">
               <label for="skillLevel">What do you think your level of English? Beginner, Intermediate or
                 Advanced.</label>
-              <input type="text" name="skillLevel" placeholder="" />
+              <input type="text" name="skillLevel" id="skillLevel" placeholder="" required />
             </div>
             <div class="field half">
               <label for="timeStudied">Have you studied English before? If yes, how long?</label>
-              <input type="text" name="timeStudied" placeholder="" />
+              <input type="text" name="timeStudied" id="timeStudied" placeholder="" required />
             </div>
             <div class="field">
-              <label for="skillLevel">What kind of lessons are you interested in? (Speaking, listening, reading,
+              <label for="lessonType">What kind of lessons are you interested in? (Speaking, listening, reading,
                 writing, test preparation, academic English, Business English etc.)</label>
-              <input type="text" name="skillLevel" placeholder="" />
+              <input type="text" name="lessonType" id="lessonType" placeholder="" required />
             </div>
             <div class="field">
-              <label for="timeStudied">How much time can you dedicate to improving your English?</label>
-              <input type="text" name="timeStudied" placeholder="" />
+              <label for="time">How much time can you dedicate to improving your English?</label>
+              <input type="text" name="time" id="time" placeholder="" required />
             </div>
 
             <!-- <div class="field">
@@ -276,6 +276,47 @@
   </footer>
 
   <!-- Scripts -->
+
+  <script>
+    function checkForm(form) {
+      /** get all the inputs within the submitted form **/
+      var inputs = form.getElementsByTagName('input');
+      for (var i = 0; i < inputs.length; i++) {
+        // only validate the inputs that have the required attribute
+        if (inputs[i].hasAttribute("required")) {
+          if (inputs[i].value == "") {
+            // found an empty field that is required
+            alert("Please fill all required fields");
+            return false;
+          }
+        }
+      }
+      return true;
+    }
+
+    function formSubmit(form) {
+      if (checkForm(form)) {
+        //send email here
+        var subject = "EnglishPro88 Enquiry";
+        var sendTo = "matthew.alunni@gmail.com";
+
+        var name = document.getElementById('name').value;
+        var email = document.getElementById('email').value;
+        var skillLevel = document.getElementById('skillLevel').value;
+        var timeStudied = document.getElementById('timeStudied').value;
+        var lessonType = document.getElementById('lessonType').value;
+        var time = document.getElementById('time').value;
+
+        var body = "Name: " + name + "\r\nEmail: " + email + "\r\nSkill Level: " + skillLevel
+          + "\r\nTime Studied: " + timeStudied + "\r\nLesson Type: " + lessonType + "\r\nTime: " + time;
+        var ebody = encodeURIComponent(body)
+        var openString = 'mailto:' + sendTo + '?subject='+ subject +'&body=' + ebody;
+        window.open(openString);
+
+      }
+    }
+  </script>
+
   <script src="assets/js/jquery.min.js"></script>
   <script src="assets/js/jquery.poptrox.min.js"></script>
   <script src="assets/js/jquery.scrolly.min.js"></script>
